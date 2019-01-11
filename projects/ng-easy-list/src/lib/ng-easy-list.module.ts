@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { NgEasyListDirective } from './ng-easy-list.directive';
+
+import { EasyListForDirective } from './easy-list-for.directive';
 
 @NgModule({
-  declarations: [NgEasyListDirective],
-  exports: [NgEasyListDirective]
+  declarations: [EasyListForDirective],
+  exports: [EasyListForDirective],
 })
 export class NgEasyListModule { }
