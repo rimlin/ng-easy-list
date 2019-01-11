@@ -1,7 +1,12 @@
 import {
   Directive,
+  DoCheck,
   ElementRef,
   Input,
+  IterableChangeRecord,
+  IterableChanges,
+  IterableDiffer,
+  IterableDiffers,
   NgIterable,
   TemplateRef,
   ViewContainerRef,
@@ -10,12 +15,14 @@ import {
 @Directive({
   selector: '[easyListFor][easyListForOf]'
 })
-export class EasyListForDirective<T>  {
+export class EasyListForDirective<T> implements DoCheck {
   @Input()
   set easyListForOf(value: NgIterable<T>) {
     this._easyListForOf = value;
 
-    this.renderList(value as any[]);
+    if (!this.differ && value) {
+      this.differ = this.differs.find(value).create(null);
+    }
   }
 
   get easyListForOf(): NgIterable<T> {
@@ -24,21 +31,33 @@ export class EasyListForDirective<T>  {
 
   _easyListForOf: NgIterable<T>;
 
+  differ: IterableDiffer<T>;
+
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
     private elementRef: ElementRef,
+    private differs: IterableDiffers,
   ) {
-    console.log(elementRef);
   }
 
-  private renderList(items: any[]) {
-    console.log(items);
+  ngDoCheck(): void {
+    if (!this.differ) {
+      return;
+    }
 
-    items.forEach(record => {
+    const changes = this.differ.diff(this.easyListForOf);
+
+    if (changes) {
+      this.applyChanges(changes);
+    }
+  }
+
+  private applyChanges(changes: IterableChanges<T>) {
+    changes.forEachAddedItem((record: IterableChangeRecord<T>) => {
       const view = this.viewContainerRef.createEmbeddedView(this.templateRef);
       this.viewContainerRef.insert(view);
-      view.context.$implicit = record;
+      view.context.$implicit = record.item;
     });
   }
 }
