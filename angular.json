@@ -7,7 +7,7 @@
       "root": "projects/ng-easy-list",
       "sourceRoot": "projects/ng-easy-list/src",
       "projectType": "library",
-      "prefix": "el",
+      "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

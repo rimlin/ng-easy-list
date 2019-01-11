@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgEasyListComponent } from './ng-easy-list.component';
+import { NgEasyListDirective } from './ng-easy-list.directive';
 
-describe('NgEasyListComponent', () => {
-  let component: NgEasyListComponent;
-  let fixture: ComponentFixture<NgEasyListComponent>;
+describe('NgEasyListDirective', () => {
+  let component: NgEasyListDirective;
+  let fixture: ComponentFixture<NgEasyListDirective>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgEasyListComponent ]
+      declarations: [ NgEasyListDirective ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgEasyListComponent);
+    fixture = TestBed.createComponent(NgEasyListDirective);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
